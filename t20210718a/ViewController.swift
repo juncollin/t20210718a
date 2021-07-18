@@ -11,35 +11,6 @@ import Combine
 
 
 
-
-struct YAxisBillboardComponent: Component {}
-extension YAxisBillboardComponent: Codable {}
-protocol HasYAxisBillboard where Self: Entity {}
-
-extension HasYAxisBillboard where Self: Entity {
-    var yAxisBillboard: YAxisBillboardComponent {
-        get { return components[YAxisBillboardComponent.self] ?? YAxisBillboardComponent() }
-        set { components[YAxisBillboardComponent.self] = newValue }
-    }
-
-    func rotate(lookAt: Transform) {
-        guard let parent = self.parent else { return }
-        // get camera world space position
-        let cameraPosition = lookAt.translation
-        var newTransform = transform
-
-        // Y axis rotation towards lookAt in X-Z
-        newTransform = newTransform.yAxisLookAtWorldSpacePoint(parentEntity: parent, worldSpaceAt: cameraPosition)
-
-        // since this is a local transorm to this device, we
-        // don't want it shipped across the network to other devices.
-        // let them figure out their own transform
-        self.withUnsynchronized {
-            self.transform = newTransform
-        }
-    }
-}
-
 extension Transform {
     // yAxisLookAtWorldSpacePoint()
     // support for camera facing billboard which only rotates around the Y axis.  i.e. a glow texture around a vertical
@@ -87,7 +58,6 @@ extension Transform {
 //        }
         return transform
     }
-
 }
 
 
@@ -115,12 +85,6 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//        // Load the "Box" scene from the "Experience" Reality File
-//        let boxAnchor = try! Experience.loadBox()
-//
-//        // Add the box anchor to the scene
-//        arView.scene.anchors.append(boxAnchor)
         
         //let anchor = AnchorEntity()
         let anchor = AnchorEntity(world: SIMD3<Float>(0, 0, -1))
@@ -150,26 +114,11 @@ class ViewController: UIViewController {
             assertionFailure("Failed to set a custom shader \(error)")
         }
         
-        planeModel.position = SIMD3<Float>(0.0, 0.0, -1.0)
-//        planeModel.transform.rotation = simd_quatf(angle: .pi/2, axis: [0,0,1])
-//        planeModel.look(at: arView.cameraTransform.translation, from: planeModel.position, upVector: [0,1,0], relativeTo: nil)
+        planeModel.position = SIMD3<Float>(0.0, 0.0, 0.0)
         rotate(ent: planeModel, lookAt: arView.cameraTransform)
-//        rotate(ent: planeModel, lookAt: SIMD3<Float>(0.4,0.4,0.0))
-        
         anchor.addChild(planeModel)
         
-        let b = ModelEntity(
-            mesh: .generateBox(size: 0.5),
-            materials: [SimpleMaterial(color: .red, isMetallic: false)]
-        )
-        b.position = SIMD3<Float>(1.0, 0.0, -1.0)
-        anchor.addChild(b)
-        
         sceneEventsUpdateSubscription = arView.scene.subscribe(to: SceneEvents.Update.self) { [self] _ in
-//            planeModel.billboard(targetPosition: arView.cameraTransform.translation)
-//            planeModel.look(at: arView.cameraTransform.translation, from: planeModel.position, upVector: SIMD3(0.0,1.0,0.0), relativeTo: nil)
-//            look(at: arView.cameraTransform, from: position(relativeTo: nil), relativeTo: nil)
-            b.look(at: arView.cameraTransform.translation, from: b.position, relativeTo: nil)
             rotate(ent: planeModel, lookAt: arView.cameraTransform)
 
         }
