@@ -13,6 +13,10 @@
 		A32AA31126A37C0600D55B1C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A32AA30F26A37C0600D55B1C /* Main.storyboard */; };
 		A32AA31326A37C0700D55B1C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A32AA31226A37C0700D55B1C /* Assets.xcassets */; };
 		A32AA31626A37C0700D55B1C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A32AA31426A37C0700D55B1C /* LaunchScreen.storyboard */; };
+		A32AA31D26A37D3600D55B1C /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32AA31C26A37D3600D55B1C /* Common.swift */; };
+		A32AA31F26A37D5200D55B1C /* Shader.metal in Sources */ = {isa = PBXBuildFile; fileRef = A32AA31E26A37D5200D55B1C /* Shader.metal */; };
+		A32AA32126A37E3600D55B1C /* number1234.png in Resources */ = {isa = PBXBuildFile; fileRef = A32AA32026A37E3600D55B1C /* number1234.png */; };
+		A32AA32326A37E3D00D55B1C /* number13.png in Resources */ = {isa = PBXBuildFile; fileRef = A32AA32226A37E3D00D55B1C /* number13.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +27,10 @@
 		A32AA31026A37C0600D55B1C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A32AA31226A37C0700D55B1C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A32AA31526A37C0700D55B1C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		A32AA31C26A37D3600D55B1C /* Common.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
+		A32AA31E26A37D5200D55B1C /* Shader.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shader.metal; sourceTree = "<group>"; };
+		A32AA32026A37E3600D55B1C /* number1234.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = number1234.png; sourceTree = "<group>"; };
+		A32AA32226A37E3D00D55B1C /* number13.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = number13.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +65,10 @@
 			children = (
 				A32AA30926A37C0600D55B1C /* AppDelegate.swift */,
 				A32AA30B26A37C0600D55B1C /* ViewController.swift */,
+				A32AA31E26A37D5200D55B1C /* Shader.metal */,
+				A32AA31C26A37D3600D55B1C /* Common.swift */,
+				A32AA32026A37E3600D55B1C /* number1234.png */,
+				A32AA32226A37E3D00D55B1C /* number13.png */,
 				A32AA30D26A37C0600D55B1C /* Experience.rcproject */,
 				A32AA30F26A37C0600D55B1C /* Main.storyboard */,
 				A32AA31226A37C0700D55B1C /* Assets.xcassets */,
@@ -123,6 +135,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A32AA32326A37E3D00D55B1C /* number13.png in Resources */,
+				A32AA32126A37E3600D55B1C /* number1234.png in Resources */,
 				A32AA31626A37C0700D55B1C /* LaunchScreen.storyboard in Resources */,
 				A32AA31326A37C0700D55B1C /* Assets.xcassets in Resources */,
 				A32AA31126A37C0600D55B1C /* Main.storyboard in Resources */,
@@ -136,8 +150,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A32AA31D26A37D3600D55B1C /* Common.swift in Sources */,
 				A32AA30C26A37C0600D55B1C /* ViewController.swift in Sources */,
 				A32AA30A26A37C0600D55B1C /* AppDelegate.swift in Sources */,
+				A32AA31F26A37D5200D55B1C /* Shader.metal in Sources */,
 				A32AA30E26A37C0600D55B1C /* Experience.rcproject in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
