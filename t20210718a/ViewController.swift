@@ -8,6 +8,7 @@
 import UIKit
 import RealityKit
 import Combine
+import ARKit
 
 
 
@@ -36,10 +37,8 @@ extension Transform {
         // cross product will not give good result
 //        let cosAngle = abs(dot(lsUpVector.xyz, zAxis))
 //        let xAxis = normalize(cross(lsUpVector.xyz, zAxis))
-
         let cosAngle = abs(dot(SIMD3<Float>(lsUpVector.x, lsUpVector.y, lsUpVector.z), zAxis))
         let xAxis = normalize(cross(SIMD3<Float>(lsUpVector.x, lsUpVector.y, lsUpVector.z), zAxis))
-
 
         if cosAngle >= (Float(1.0) - .ulpOfOne) {
 //            os_log(.error, log: GameLog.general, "Error: up=(%s), z=(%s), cross is x=(%s)", "\(lsUpVector)", "\(zAxis)", "\(xAxis)")
@@ -50,7 +49,7 @@ extension Transform {
                               SIMD4<Float>(yAxis.x, yAxis.y, yAxis.z, 0),
                               SIMD4<Float>(zAxis.x, zAxis.y, zAxis.z, 0),
                               SIMD4<Float>(lsPosition.x, lsPosition.y, lsPosition.z, 1))
-        var transform = Transform(matrix: matrix)
+        let transform = Transform(matrix: matrix)
 
 //        let scale = UserSettings.glowScale
 //        if scale != 1.0 {
@@ -116,11 +115,35 @@ class ViewController: UIViewController {
         
         planeModel.position = SIMD3<Float>(0.0, 0.0, 0.0)
         rotate(ent: planeModel, lookAt: arView.cameraTransform)
+        
+        
+        planeModel.collision = CollisionComponent(shapes: [ShapeResource.generateConvex(from: planeModel.model!.mesh)])
         anchor.addChild(planeModel)
+        planeModel.name = "plane_"
         
         sceneEventsUpdateSubscription = arView.scene.subscribe(to: SceneEvents.Update.self) { [self] _ in
             rotate(ent: planeModel, lookAt: arView.cameraTransform)
+            
+            if let ray = arView?.ray(through: arView.center),
+              let results = arView?.scene.raycast(origin: ray.origin,
+                                                  direction: ray.direction,
+                                                  length: 1.0,
+                                                  query: .nearest),
+              results.count > 0 {
 
+              if let grab = results.filter({ $0.distance < 1.5 }).first {
+                  if grab.entity.name == "plane_" {
+                      print("grab \(grab)")
+                  }
+              }
+            }
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        let configuration = AROrientationTrackingConfiguration()
+        configuration.worldAlignment = ARConfiguration.WorldAlignment.gravityAndHeading
+        arView.session.run(configuration)
+        
     }
 }
